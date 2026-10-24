@@ -1,5 +1,6 @@
 Options -Indexes
 RewriteEngine On
+RewriteRule ^(?:app|config|database|views|docs)(?:/|$) - [F,L,NC]
 RewriteRule (^|/)\. - [F,L]
 RewriteRule ^landing\.html$ landing.php [L]
 DirectoryIndex index.php

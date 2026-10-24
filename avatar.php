@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
-require __DIR__.'/auth.php';require __DIR__.'/profile.php';auth_bootstrap();
+require __DIR__.'/app/auth.php';require __DIR__.'/app/profile.php';auth_bootstrap();
 function avatar_denied(int $status): never {http_response_code($status);header('Content-Type: text/plain; charset=UTF-8');exit('Picture unavailable.');}
-$c=require __DIR__.'/config.php';
+$c=require __DIR__.'/config/config.php';
 $p=new PDO('mysql:host='.$c['host'].';port='.$c['port'].';dbname='.$c['database'].';charset=utf8mb4',$c['username'],$c['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false,PDO::ATTR_TIMEOUT=>5]);
 auth_resume($p);auth_restore($p);
 if(!isset($_SESSION['uid']))avatar_denied(401);

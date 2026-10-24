@@ -13,16 +13,16 @@ Veridian lets employees request time off and track their balances. Administrator
 ## Run locally with XAMPP
 
 1. Clone or download this repository into `C:\xampp\htdocs\veridian`.
-2. Copy `config.example.php` to `config.php`.
-3. Set the database connection in `config.php`. The example uses local XAMPP defaults: database `veridian`, user `root`, and an empty database password.
+2. Copy `config/config.example.php` to `config/config.php`.
+3. Set the database connection in `config/config.php`. The example uses local XAMPP defaults: database `veridian`, user `root`, and an empty database password.
 4. Start Apache and MySQL in XAMPP.
 5. Open **http://localhost/veridian/**. Do not open PHP files directly from your file manager.
-6. On a fresh installation, complete the administrator setup. The local setup creates the database tables when the database user has permission. Alternatively, create a database and import `schema.sql` first.
+6. On a fresh installation, complete the administrator setup. The local setup creates the database tables when the database user has permission. Alternatively, create a database and import `database/schema.sql` first.
 7. Sign in, open **Create Accounts**, select **Employee**, and create the employee accounts you need.
 
 The landing page is **http://localhost/veridian/landing.html**.
 
-`schema.sql` contains table definitions only. It does not contain employee records, passwords, or sample accounts. Existing installations should follow the upgrade notes in [Operations](docs/OPERATIONS.md); importing the schema alone does not add missing columns to existing tables.
+`database/schema.sql` contains table definitions only. It does not contain employee records, passwords, or sample accounts. Existing installations should follow the upgrade notes in [Operations](docs/OPERATIONS.md); importing the schema alone does not add missing columns to existing tables.
 
 ## Local demonstration accounts
 
@@ -111,7 +111,7 @@ The landing page uses the sample employee name **ITAlas**, but its displayed bal
 
 ## Hosting and GitHub
 
-This repository contains application source and an empty database schema. It excludes `config.php`, database exports, local test records, and XAMPP data.
+This repository contains application source and an empty database schema. It excludes `config/config.php`, database exports, local test records, and XAMPP data.
 
 For hosted use, create a database, import the schema, configure the connection, use HTTPS, and set a strong `setup_key` before exposing first-time setup. Keep credentials in private configuration or environment variables.
 
@@ -120,3 +120,23 @@ Supported configuration variables are `VERIDIAN_DB_HOST`, `VERIDIAN_DB_PORT`, `V
 **Render deployment is not configured yet.** Running this PHP application on Render still requires a Docker configuration, a securely configured external database connection, and a database import. Pushing this repository to GitHub does not automatically publish a working site.
 
 See [Operations](docs/OPERATIONS.md) for additional installation and maintenance details.
+
+## Project folders
+
+```text
+veridian/
+├── app/                 Authentication, security, profiles, and leave helpers
+├── assets/
+│   ├── css/             Stylesheets
+│   └── js/              Browser interactions
+├── config/              Private configuration and safe example
+├── database/            Empty database schema
+├── docs/                Operations notes
+├── views/               Page templates and table partials
+├── index.php            Application entry point
+├── landing.php          Public landing-page handler
+├── avatar.php           Authenticated profile-picture endpoint
+└── session-state.php    Page-close session endpoint
+```
+
+The public landing address remains `landing.html`; Apache routes it through `landing.php`. Internal folders are blocked from direct web access. Copy `config/config.example.php` to `config/config.php` when installing.

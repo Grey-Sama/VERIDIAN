@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule (^|/)\. - [F,L]
+RewriteRule ^landing\.html$ landing.php [L]
+DirectoryIndex index.php
+<FilesMatch "(?i)(^(config(?:\.example)?|auth|security|profile|table|leave|approved|balances|employees|balance-summary|calendar|create-accounts)\.php$|^README\.md$|\.(sql|log|ini|bak|backup|old|zip)$)">
+ Require all denied
+</FilesMatch>

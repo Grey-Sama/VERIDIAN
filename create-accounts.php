@@ -1,0 +1,22 @@
+<?php
+if(!isset($admin)||!$admin){http_response_code(403);exit;}
+$accountType=query_text('account_type');
+if(!in_array($accountType,['employee','administrator'],true))$accountType='';
+if($accountType==='administrator'&&(int)$user['id']!==$primaryAdmin){http_response_code(403);$accountType='';}
+?>
+<div class="page-heading"><p class="eyebrow">GIVE YOUR TEAM ACCESS</p><h1>Create Accounts</h1><p class="muted">Share credentials privately. Employees should change their initial password.</p></div>
+<div class="page-actions"><a class="button button-secondary" href="index.php?view=team">View Employee List ↗</a></div>
+<form method="get" class="account-type-picker" aria-label="Choose Account Type"><input type="hidden" name="view" value="accounts"><button class="button <?= $accountType==='employee'?'':'button-secondary' ?>" name="account_type" value="employee" aria-pressed="<?= $accountType==='employee'?'true':'false' ?>">Employee</button><?php if((int)$user['id']===$primaryAdmin):?><button class="button <?= $accountType==='administrator'?'':'button-secondary' ?>" name="account_type" value="administrator" aria-pressed="<?= $accountType==='administrator'?'true':'false' ?>">Administrator</button><?php endif ?></form>
+<?php if($accountType===''):?><p class="muted account-type-prompt">Choose an account type to begin.</p><?php endif ?>
+<div class="account-create-grid account-create-single">
+<?php if($accountType==='employee'):?>
+<section class="panel form-panel"><h2>Create Employee Account</h2><form method="post"><?= csrf() ?><input type="hidden" name="action" value="employee"><label>Full Name<input name="name" maxlength="100" autocomplete="name" aria-describedby="employee-name-hint" required></label><small class="field-hint" id="employee-name-hint">Enter a display name.</small>
+<label>Username<input name="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9_.\-]{3,30}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="employee-username-hint" required></label><small class="field-hint" id="employee-username-hint">3–30 letters, numbers, dots, hyphens, or underscores.</small>
+<label>Email Address<input name="email" type="email" maxlength="190" autocomplete="off" aria-describedby="employee-email-hint" required></label><small class="field-hint" id="employee-email-hint">Include @ and a domain, e.g. name@veridian.ph.</small>
+<label>Initial Password<input name="password" type="password" minlength="8" maxlength="16" autocomplete="new-password" aria-describedby="employee-password-hint" required></label><small class="field-hint" id="employee-password-hint">8–16 characters. Special characters are optional.</small><button class="button">Create Employee Account ↗</button></form></section>
+<?php endif ?>
+<?php if($accountType==='administrator'&&(int)$user['id']===$primaryAdmin):?>
+<section class="panel form-panel"><h2>Create Administrator Account</h2><p class="muted">Administrators can review leaves and manage employees.</p><form method="post"><?= csrf() ?><input type="hidden" name="action" value="administrator"><label>Full Name<input name="name" maxlength="100" autocomplete="name" required></label><label>Username<input name="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9_.\-]{3,30}" autocomplete="off" required></label><small class="field-hint">3–30 letters, numbers, dots, hyphens, or underscores.</small><label>Email Address<input type="email" name="email" maxlength="190" autocomplete="off" required></label><small class="field-hint">Include @ and a domain.</small><label>Initial Password<input type="password" name="password" minlength="8" maxlength="16" autocomplete="new-password" required></label><small class="field-hint">8–16 characters. Special characters are optional.</small><button class="button">Create Administrator Account</button></form></section>
+<?php endif ?>
+
+</div>

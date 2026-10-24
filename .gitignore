@@ -1,0 +1,13 @@
+config.php
+.env
+.env.*
+!.env.example
+*.log
+*.sql
+!schema.sql
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite3
+*.bak
+*.key

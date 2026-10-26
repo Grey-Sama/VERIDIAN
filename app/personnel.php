@@ -16,3 +16,6 @@ function personnel_validate(bool $administrator=false): array {
  }
  return $values;
 }
+
+function employment_types(): array { return ['Full-Time','Part-Time','New Employee']; }
+function employment_validate(string $value): string { if(!in_array($value,employment_types(),true))throw new RuntimeException('Choose a valid employment category.');return $value; }

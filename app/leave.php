@@ -18,10 +18,17 @@ function leave_duration(array $r): float { return $r['leave_type']==='Fast'?0.5:
 function leave_parts(string $a,string $b): array {
  $parts=[];for($y=(int)substr($a,0,4);$y<=(int)substr($b,0,4);$y++)$parts[$y]=days(max($a,"$y-01-01"),min($b,"$y-12-31"));return $parts;
 }
+function leave_policy(?string $category): array {
+ return $category==='New Employee'?['Annual'=>0,'Sick'=>3,'Emergency'=>0,'Fast'=>3]:['Annual'=>15,'Sick'=>15,'Emergency'=>7,'Fast'=>3];
+}
+function leave_category(PDO $pdo,int $uid,int $year): ?string {
+ $q=$pdo->prepare('SELECT employment_type FROM users WHERE id=?');$q->execute([$uid]);$category=$q->fetchColumn();
+ if($year<(int)date('Y')){$q=$pdo->prepare('SELECT employment_type FROM leave_category_history WHERE user_id=? AND year=?');$q->execute([$uid,$year]);$historic=$q->fetchColumn();if($historic!==false)$category=$historic;}
+ return is_string($category)?$category:null;
+}
 function leave_balance(PDO $pdo,int $uid,int $year): array {
- $q=$pdo->prepare('SELECT annual,sick,emergency FROM leave_allowances WHERE user_id=? AND year=?');$q->execute([$uid,$year]);$row=$q->fetch()?:['annual'=>15,'sick'=>15,'emergency'=>7];
- $out=[];foreach(['Annual','Sick','Emergency'] as $type)$out[$type]=['allowance'=>(int)$row[strtolower($type)],'approved'=>0,'pending'=>0];
- $out['Fast']=['allowance'=>3,'approved'=>0,'pending'=>0];
+ // Credits follow employment category. Legacy per-person numeric overrides are unused.
+ $out=[];foreach(leave_policy(leave_category($pdo,$uid,$year)) as $type=>$allowance)$out[$type]=['allowance'=>$allowance,'approved'=>0,'pending'=>0];
  $q=$pdo->prepare("SELECT * FROM leave_requests WHERE user_id=? AND status IN ('Pending','Approved') AND start_date<=? AND end_date>=?");$q->execute([$uid,"$year-12-31","$year-01-01"]);
  foreach($q as $r){$pool=leave_pool($r['leave_type']);$out[$pool][strtolower($r['status'])]+=days(max($r['start_date'],"$year-01-01"),min($r['end_date'],"$year-12-31"));}
  foreach($out as &$b)$b['available']=$b['allowance']-$b['approved']-$b['pending'];unset($b);return $out;

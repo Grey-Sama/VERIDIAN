@@ -1,5 +1,5 @@
 <?php if(!isset($installed)||!$installed||$user){http_response_code(403);exit;} ?>
-<form method="post">
+<p class="muted">New accounts start as New Employee. Your administrator manages the category.</p><form method="post">
 <?= csrf() ?><input type="hidden" name="action" value="register">
 <label>Full Name<input name="name" maxlength="100" autocomplete="name" value="<?= e(field('name')) ?>" required></label>
 <small class="field-hint">Enter your full name.</small>

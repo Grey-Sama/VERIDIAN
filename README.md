@@ -18,7 +18,7 @@ Veridian lets employees request time off and track their balances. Administrator
 4. Start Apache and MySQL in XAMPP.
 5. Open **http://localhost/veridian/**. Do not open PHP files directly from your file manager.
 6. On a fresh installation, complete the administrator setup. The local setup creates the database tables when the database user has permission. Alternatively, create a database and import `database/schema.sql` first.
-7. Employees can register through **Create Employee Account** on the shared sign-in page. Administrators may also create employees through **Create Accounts**. Select **Employee** or, for Admin A, **Administrator**, then fill out the form shown below.
+7. Employees can register through **Create Employee Account** on the shared sign-in page. Administrators may also create employees through **Create Accounts**. For employee creation, select an Employment Category; the default is New Employee. Select **Employee** or, for Admin A, **Administrator**, then fill out the form shown below.
 
 The landing page is **http://localhost/veridian/landing.html**.
 
@@ -69,7 +69,7 @@ Keep sensitive medical or personal details out of request reasons unless require
 - **Leave Calendar**: see all employees' approved leaves and current leave periods.
 - **Employees**: search and sort names, usernames, emails, job roles, departments, request counts, and remaining balances. Account-creation forms are on a separate page.
 - **Create Accounts**: select **Employee** to show the employee creation form. Admin A also sees the **Administrator** button. Only the selected form appears.
-- **Leave Balances**: review allowances and usage, select a year, and adjust full-day allowances. An allowance cannot be reduced below already committed days.
+- **Leave Balances**: review credits and usage by year, and assign Full-Time, Part-Time, or New Employee. Manual numeric editing is removed; category changes cannot reduce credits below committed leave.
 
 ### Admin A permissions
 
@@ -78,7 +78,7 @@ The first administrator created during setup is the primary administrator—Admi
 - Select **Administrator** on Create Accounts to create another administrator.
 - Reset an employee's password from the Employees list.
 
-Other administrators can review leave requests, manage allowances, and create employees, but cannot create administrators, reset employee passwords, or delete accounts.
+Other administrators can review leave requests, manage employment categories, and create employees, but cannot create administrators, reset employee passwords, or delete accounts.
 
 ### Forgotten employee password
 
@@ -92,13 +92,13 @@ Existing passwords cannot be viewed: the database stores password hashes. A rese
 
 ## Leave policy
 
-- **Annual:** 15 weekdays per calendar year by default.
-- **Sick:** 15 weekdays per calendar year by default.
-- **Emergency:** 7 weekdays per calendar year by default.
+- **Annual:** 15 weekdays for Full-Time and Part-Time; locked for New Employee.
+- **Sick:** 15 weekdays for Full-Time and Part-Time; 3 for New Employee.
+- **Emergency:** 7 weekdays for Full-Time and Part-Time; locked for New Employee.
 - **Personal:** uses the Annual allowance.
 - **Fast Leave:** a separate allowance of **3 uses per calendar year**. Each use covers **one half-day (0.5 day)** on the chosen weekday. Select Fast Leave and one date; the form reserves one use.
 
-Administrators can adjust Annual, Sick, and Emergency allowances per employee and year. Fast Leave has a fixed three-use limit.
+Full-Time and Part-Time receive 15 Annual, 15 Sick, and 7 Emergency days. New Employees receive 3 Sick days immediately, with Annual, Personal, and Emergency leave locked. All categories receive 3 Fast Leave uses. Administrators change categories rather than editing numeric allowances. Moving to Full-Time unlocks the full allowance and retains approved and pending usage; it does not add a fresh allowance on top of unused credits. Category changes take effect for current and future years. Past-year categories with requests are preserved when a category changes. Downgrades are rejected if committed usage exceeds the target credits.
 
 Only **Monday–Friday** is counted. Public holidays are not configured and count when they fall on a weekday. Weekend starts are rejected. Leave dates must start today or later, and a request cannot span more than 365 calendar days.
 
@@ -150,12 +150,12 @@ veridian/
 The public landing address remains `landing.html`; Apache routes it through `landing.php`. Internal folders are blocked from direct web access. Copy `config/config.example.php` to `config/config.php` when installing.
 
 ## Shared sign-in and access control
-Employees and administrators sign in through `index.php?auth=login`. Legacy `/admin` links redirect to this shared page. Public registration always creates an employee. Admin A alone can create administrators, reset employee passwords, or delete accounts. Administrators review requests, adjust allowances, and create employees. Employees can submit/cancel their own pending requests and read their own records. All users can update only their own account details. Job titles and departments never grant account privileges. Every protected POST action is checked against the central permissions in `app/access.php` before its handler runs.
+Employees and administrators sign in through `index.php?auth=login`. Legacy `/admin` links redirect to this shared page. Public registration always creates an employee. Admin A alone can create administrators, reset employee passwords, or delete accounts. Administrators review requests, manage employment categories, and create employees. Employees can submit/cancel their own pending requests and read their own records. All users can update only their own account details. Job titles and departments never grant account privileges. Every protected POST action is checked against the central permissions in `app/access.php` before its handler runs.
 
 ## Job roles and departments
-Employee registration and Admin A's account forms require Job Role and Department / Office. Employee options include teaching, administrative, academic support, security and service personnel. Department examples include IT, INDUS, CBA and support offices. Other allows a custom title or office. Administrator titles include IT Head, Maintenance Head and Head of Registrar.
+Employee registration and Admin A's account forms require Job Role and Department / Office. Self-registration always starts as New Employee; the public form cannot assign Full-Time or Part-Time. Administrators set the category for existing employees under Leave Balances, and can select it when creating an employee. Employee options include teaching, administrative, academic support, security and service personnel. Department examples include IT, INDUS, CBA and support offices. Other allows a custom title or office. Administrator titles include IT Head, Maintenance Head and Head of Registrar.
 
-Job information does not alter account permissions or leave allowances. Existing users can add their details in Account Settings > Work Details; existing records are not assigned guessed titles. The employee directory shows and sorts these fields. Existing databases require the additive `database/migrate-personnel.sql` migration before the updated code is installed; run it once only. Fresh installs use `database/schema.sql`.
+Job information does not alter account permissions or leave allowances. Existing users can add their details in Account Settings > Work Details; existing records are not assigned guessed titles. The employee directory shows and sorts these fields and Employment Category. Employees see their own category in Leave Balances and Account Settings. Employment categories do not change account permissions. Existing databases require the additive `database/migrate-personnel.sql` migration before the updated code is installed; run it once only. Fresh installs use `database/schema.sql`.
 
 The role examples were informed by published careers pages: [OB Montessori Center](https://obmontessori.edu.ph/careers), [Xavier School](https://www.xs.edu.ph/index.php/jobs/), and [National University](https://www.nu.edu.ph/nu-nazareth/talent-hub/jobs). They are editable examples, not a universal staffing standard. Catalog options are maintained in `app/personnel.php`.
 
@@ -169,3 +169,9 @@ Employees can open Account Settings > Change Username, enter a new unique userna
 
 ## Readability and interactions
 The interface uses balanced body text, navigation, table text, and helper notes through assets/css/readability.css. The landing sample retains its compact illustrated dashboard and floating cards, with its original responsive layout. Wide tables scroll within their own panels. Hover feedback is restrained, keyboard focus stays visible, and reduced-motion preferences disable movement.
+
+## Employment category upgrade
+
+Run database/migrate-employment.sql once on an existing installation before deploying this code. If employment_type already exists from an interim local update, run only the CREATE TABLE statement for leave_category_history. New installations use schema.sql. Existing account categories stay Not Set rather than guessing employment status; they retain the full policy until an administrator classifies them. New self-registered accounts start as New Employee. No automatic time-based promotion or three-month waiting period is implemented. The 3 Sick days are a chosen Veridian demonstration policy, not a statutory rule.
+
+Numeric overrides in the legacy leave_allowances table are retained for historical reference but no longer used in balance calculations. No leave requests or account records are removed by this migration. The internal leave_category_history table preserves past category assignments for years containing requests. Review this chosen policy before using it for actual employment benefits.

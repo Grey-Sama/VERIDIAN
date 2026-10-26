@@ -1,2 +1,4 @@
 <?php if(!isset($user)||!$user||$admin)return;$summary=leave_balance($pdo,(int)$user['id'],(int)date('Y')); ?>
 <section class="panel balance-panel"><div class="panel-heading"><h2>Your Leave Balance · <?= date('Y') ?></h2><a class="text-link" href="index.php?view=balances">View Balances ↗</a></div><div class="balance-summary"><?php foreach($summary as $type=>$b):?><div><strong><?= $b['available'] ?></strong><span><?= e(leave_label($type)) ?></span><small><?= $b['approved'] ?> approved · <?= $b['pending'] ?> pending / <?= $b['allowance'] ?> <?= $type==='Fast'?'uses':'days' ?></small></div><?php endforeach ?></div><p class="muted">Personal leave shares Annual credits. Monday–Friday only.</p></section>
+
+<?php if(($user['employment_type']??null)==='New Employee'):?><p class="info">New Employee: 3 Sick days and 3 Fast Leave uses. Other credits unlock when your administrator changes your category to Full-Time.</p><?php endif ?>

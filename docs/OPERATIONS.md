@@ -65,7 +65,7 @@ Existing installs: import the additive leave_allowances CREATE TABLE statement f
 
 Approved Leaves is separate from pending review. Request and employee tables support search and clickable sort headings; tables scroll within their panels on small screens. Approved requests show start-date countdowns in calendar days, current-leave weekday reminders, or Completed.
 
-The earliest administrator (Admin A in this installation) can create additional administrators under Create Accounts. This authorization is checked on the server using the administrator ID. Other administrators can review requests, create employees and adjust allowances, but cannot create administrators. There is no public administrator registration.
+The earliest administrator (Admin A in this installation) can create additional administrators under Create Accounts. This authorization is checked on the server using the administrator ID. Other administrators can review requests, create employees and manage employment categories, but cannot create administrators. There is no public administrator registration.
 
 ## Calendar and weekday planner
 Leave Calendar shows approved leaves by month, with previous/next controls, month selection, a current-leave list, and an agenda. Admins see all employees; employees see only their own approved records. Reasons and remarks are not exposed in calendar events. Weekends have no leave events or charges, although an approved date range can span them.
@@ -93,7 +93,7 @@ Password resets open an accessible dialog showing the employee username and temp
 Employees contains the searchable, sortable employee directory and recovery controls. Create Accounts is a separate administrator page for employee creation; Admin A also sees administrator creation there. Employees cannot access that page or either creation action. Successful creation stays on Create Accounts with confirmation and a link back to the employee list.
 
 ## Current interface and permissions
-All account types use the shared sign-in. The old /admin URL redirects there. Employees self-register with job details; access is always employee. Admin A may create administrators and recover employee accounts; other administrators may create employees, review requests, and adjust full-day allowances. Job titles never alter privileges. Permission checks are centralized in app/access.php.
+All account types use the shared sign-in. The old /admin URL redirects there. Employees self-register with job details; access is always employee. Admin A may create administrators and recover employee accounts; other administrators may create employees, review requests, and manage employment categories. Job titles never alter privileges. Permission checks are centralized in app/access.php.
 
 Create Accounts presents Employee and Administrator choices, then only the selected form. Employee records and recovery controls stay in Employees. Existing users add their own job role and department in Account Settings. On a temporary-password sign-in, only password-change controls are shown until the password is replaced.
 
@@ -110,3 +110,10 @@ Employees may update their own username in Account Settings after confirming the
 
 ## Readability update 27 October 2026
 Shared readability overrides load last on the landing and application pages. Base type is 15px; navigation and buttons are 14px, with table and helper text generally 13px. Small category labels are 11px. The landing sample keeps the original compact dashboard and floating cards. Desktop sidebars can scroll vertically on short screens. Quiet hover feedback respects reduced motion. No database migration is required.
+
+## Employment categories
+Numeric Adjust Allowance controls and the allowance POST action are removed. Administrators assign Full-Time, Part-Time, or New Employee under Leave Balances. Full-Time and Part-Time have 15 Annual, 15 Sick, 7 Emergency days and 3 Fast uses. New Employee has 0 Annual, 3 Sick, 0 Emergency and 3 Fast uses immediately; Personal shares the locked Annual pool. Employment categories never grant administrator access.
+
+Run database/migrate-employment.sql before updating an existing hosted installation. It adds a nullable employment_type on users and leave_category_history. Existing employees remain Not Set, retaining full credits until classified; new self-registered employees are hardcoded New Employee. Admin-created employees default to New Employee but allow the administrator to choose a category.
+
+Category changes lock the employee row, reject commitments exceeding the target policy in current or future years, preserve past category snapshots for years containing requests, and retain all usage. Full-Time promotion sets total yearly entitlement rather than adding a second allowance. Past-year views use snapshots where available. Old numeric leave_allowances rows remain stored but are ignored. No monthly accrual, automatic regularization date, or waiting period is added. This replaces older allowance-editing instructions in this document.

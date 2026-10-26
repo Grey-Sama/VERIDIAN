@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
  name VARCHAR(100) NOT NULL,
  job_title VARCHAR(80) NOT NULL DEFAULT '',
  department VARCHAR(100) NOT NULL DEFAULT '',
+ employment_type ENUM('Full-Time','Part-Time','New Employee') NULL DEFAULT NULL,
  username VARCHAR(30) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL UNIQUE,
  email VARCHAR(190) NOT NULL UNIQUE,
  password_hash VARCHAR(255) NOT NULL,
@@ -54,6 +55,14 @@ CREATE TABLE IF NOT EXISTS leave_allowances (
  annual SMALLINT UNSIGNED NOT NULL DEFAULT 15,
  sick SMALLINT UNSIGNED NOT NULL DEFAULT 15,
  emergency SMALLINT UNSIGNED NOT NULL DEFAULT 7,
+ PRIMARY KEY(user_id,year),
+ FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS leave_category_history (
+ user_id INT UNSIGNED NOT NULL,
+ year SMALLINT UNSIGNED NOT NULL,
+ employment_type ENUM('Full-Time','Part-Time','New Employee') NULL DEFAULT NULL,
  PRIMARY KEY(user_id,year),
  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

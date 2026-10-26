@@ -12,3 +12,10 @@
 /* The fictional preview mirrors the current employee workspace. */
 .dashboard .sidebar{background:#0e432c;color:#dbeede;border-color:#245a3e}.dashboard .sidebar .brand{color:#39e46a}.dashboard .sidebar>div.active{background:#d9edce;color:#194e2b}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stats article{min-width:0}.stats article>span{line-height:1.4;min-height:22px;display:block}.stats strong small{display:block}.preview-balances{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.preview-balances>div{min-width:0}.preview-policy{line-height:1.6}.features{align-items:stretch}.features>article{display:flex;flex-direction:column}.features>article>.art{flex-shrink:0}.features>article>p{margin-bottom:0}.faq-grid details{min-width:0}.closing .button{min-height:46px}
 @media(max-width:760px){.stats article>span{font-size:5px;min-height:14px}.stats strong{font-size:16px}.stats article{padding:7px 5px}.stats strong small{font-size:5px}.dashboard .sidebar{background:#0e432c}.preview-balances span{font-size:8px}.preview-balances strong{font-size:24px}}
+
+/* A quiet cursor-following glow stays behind the hero content. */
+.hero{position:relative;isolation:isolate}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .hero::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 440px 340px at var(--glow-x,50%) var(--glow-y,30%),#a3ec7830,transparent 75%);opacity:0;transition:opacity 300ms ease}
+ .hero.hero-glow-active::before{opacity:1}
+}

@@ -56,7 +56,7 @@ Use different, unique passwords before making an installation public. These demo
 5. **Approved Leaves** separates confirmed requests from pending requests.
 6. **Leave Calendar** shows your own approved leaves and current leave periods.
 7. **Leave Balances** shows your annual allowance, approved usage, pending reservations, and available balance by year.
-8. **Account Settings** lets you update your job role and department, change your password, and manage your profile picture.
+8. **Account Settings** lets employees change their username using their current password, update job role and department, change password, and manage their profile picture.
 
 Registration creates an **employee** account only. Usernames and email addresses must be unique. Password confirmation and job details are required. Registration attempts are rate-limited; email verification is not implemented. Administrator accounts are created inside the protected dashboard by Admin A.
 
@@ -162,3 +162,7 @@ The role examples were informed by published careers pages: [OB Montessori Cente
 ### Delete accounts
 
 Only Admin A can delete employee or other administrator accounts from **Employees**. Other administrators appear in a separate list below the employee directory. Select **Delete Account**, type the exact username, then confirm. Deletion permanently removes the account, its leave requests, allowances, profile picture, and remembered sessions. Existing sign-ins lose access on their next request. Decisions made by a deleted administrator on other employees’ requests remain, with the reviewer reference cleared. Admin A’s own account is protected. Cancel or close the dialog to keep the account.
+
+## Changing an employee username
+
+Employees can open Account Settings > Change Username, enter a new unique username and their current password, then select Update Username. Use 3–30 letters, numbers, dots, hyphens, or underscores. Usernames are case-insensitive when signing in and checking uniqueness. Only the signed-in employee’s own username can be changed; administrators do not have this option. Leave records, balances, profile, and account access stay attached to the same account ID. The employee stays signed in and uses the new username on future sign-ins. An account with a temporary password must change that password first.

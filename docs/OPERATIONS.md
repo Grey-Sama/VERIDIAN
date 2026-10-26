@@ -104,3 +104,6 @@ Only the primary administrator (AdminA) can delete accounts from Employees. The 
 
 ## Pre-push verification — 2026-10-26
 PHP syntax checks, 52 role/action combinations, weekday planner and password policy checks passed. Local disposable-account regression checks passed for shared sign-in, personnel fields, registration, calendar, allowances, Fast Leave, account deletion, temporary-password recovery, session closure, CSRF, escaped output, record ownership, protected paths, and login rate limiting. Fixtures were removed. Private runtime configuration and database records are excluded from Git.
+
+## Employee username changes
+Employees may update their own username in Account Settings after confirming their current password. The central username action permits employees only and uses the authenticated account ID, ignoring supplied user IDs and roles. Validation follows the existing 3–30 character username policy and the database case-insensitive unique constraint. Account IDs and related records remain unchanged. Current sessions and Remember Me stay valid. Temporary-password restrictions apply. No database migration is needed for this feature.

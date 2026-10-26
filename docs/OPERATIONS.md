@@ -18,7 +18,7 @@ Employees can submit leave, see their own history, cancel pending requests, and 
 - Pending or approved requests for the same employee cannot overlap.
 - Only pending requests can be reviewed or cancelled.
 - Allowances, approved usage, pending reservations and remaining days are calculated per employee and calendar year. The landing page uses illustrative data.
-- No public signup, email notifications, or attachments are included. Admin A provides employee password recovery through one-time temporary passwords.
+- Employee self-registration is available from the sign-in page. Email notifications and attachments are not included. Admin A provides employee password recovery through one-time temporary passwords.
 
 ## Database
 Local defaults in config/config.php: 127.0.0.1, port 3306, database veridian, XAMPP root user with an empty password. These are local-development defaults only. Environment variables are supported: VERIDIAN_DB_HOST, VERIDIAN_DB_PORT, VERIDIAN_DB_NAME, VERIDIAN_DB_USER, VERIDIAN_DB_PASSWORD, VERIDIAN_SETUP_KEY.
@@ -91,3 +91,16 @@ Password resets open an accessible dialog showing the employee username and temp
 
 ## Separate account creation
 Employees contains the searchable, sortable employee directory and recovery controls. Create Accounts is a separate administrator page for employee creation; Admin A also sees administrator creation there. Employees cannot access that page or either creation action. Successful creation stays on Create Accounts with confirmation and a link back to the employee list.
+
+## Current interface and permissions
+All account types use the shared sign-in. The old /admin URL redirects there. Employees self-register with job details; access is always employee. Admin A may create administrators and recover employee accounts; other administrators may create employees, review requests, and adjust full-day allowances. Job titles never alter privileges. Permission checks are centralized in app/access.php.
+
+Create Accounts presents Employee and Administrator choices, then only the selected form. Employee records and recovery controls stay in Employees. Existing users add their own job role and department in Account Settings. On a temporary-password sign-in, only password-change controls are shown until the password is replaced.
+
+The landing page is a fictional preview with static dates and examples, never a view of actual employee records. Its balance units and navigation match the application. Fast Leave has 3 half-day uses yearly and no specific time-of-day restriction. The application remains day-based.
+
+## Account deletion
+Only the primary administrator (AdminA) can delete accounts from Employees. The employee directory has Delete Account controls; other administrators appear in a separate list below. Exact username confirmation and CSRF validation are required. AdminA cannot delete itself. Deletion removes the user, owned leave requests, allowances, picture, and remembered tokens in one transaction. Existing sessions fail on their next authenticated request. Decisions on other employees' requests remain; the deleted reviewer reference becomes null.
+
+## Pre-push verification — 2026-10-26
+PHP syntax checks, 52 role/action combinations, weekday planner and password policy checks passed. Local disposable-account regression checks passed for shared sign-in, personnel fields, registration, calendar, allowances, Fast Leave, account deletion, temporary-password recovery, session closure, CSRF, escaped output, record ownership, protected paths, and login rate limiting. Fixtures were removed. Private runtime configuration and database records are excluded from Git.

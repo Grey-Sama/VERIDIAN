@@ -11,3 +11,5 @@ config.php
 *.sqlite3
 *.bak
 *.key
+
+!database/migrate-*.sql

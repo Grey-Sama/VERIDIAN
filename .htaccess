@@ -2,6 +2,8 @@ Options -Indexes
 RewriteEngine On
 RewriteRule ^(?:app|config|database|views|docs)(?:/|$) - [F,L,NC]
 RewriteRule (^|/)\. - [F,L]
+RewriteCond %{REQUEST_URI} ^(.*)/admin/?$
+RewriteRule ^admin/?$ %1/index.php?auth=login [R=302,L,NE]
 RewriteRule ^landing\.html$ landing.php [L]
 DirectoryIndex index.php
 <FilesMatch "(?i)(^(config(?:\.example)?|auth|security|profile|table|leave|approved|balances|employees|balance-summary|calendar|create-accounts)\.php$|^README\.md$|\.(sql|log|ini|bak|backup|old|zip)$)">

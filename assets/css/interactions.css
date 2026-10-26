@@ -33,3 +33,21 @@ nav a[aria-current=location]{color:#72e48e}.app-sidebar nav a[aria-current=page]
 .hero nav a{border-radius:5px}.hero nav a:focus-visible{outline-color:#8de59b}
 @media(max-width:500px){.hero-copy,.intro{min-width:0}.hero header nav a{min-height:44px}.intro .actions{gap:10px}.scene .stats strong small{line-height:1.4}.scene .dashboard{border-radius:10px 10px 0 0}}
 @media(prefers-reduced-motion:reduce){.scene .dashboard,.scene .float,.scene .progress:after,.scene .stats i:after{animation:none!important;translate:none}}
+
+/* Quiet feedback: small lifts on pointer devices, with no layout changes. */
+:root{--motion-fast:160ms}
+.balance-summary>div,.data-table tbody tr,.calendar-event,summary,.menu-toggle{transition:background-color 160ms ease,border-color 160ms ease,box-shadow 160ms ease}
+.button:focus-visible,.cancel:focus-visible,.signout:focus-visible,.filter-links a:focus-visible,.calendar-event:focus-visible{outline:2px solid #448953;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+ .button:not(:disabled):not(.is-pending):hover{transform:translateY(-1px);box-shadow:0 4px 10px #0f552418}
+ .features>article:hover,.stat:hover{transform:translateY(-2px);box-shadow:0 5px 14px #1b50240c;border-color:#bdd5b2}
+ .app-sidebar nav a:hover,.text-link:hover{transform:none}
+ .data-table tbody tr:hover{background-color:#f3f8ef}
+ .balance-summary>div:hover{border-color:#b4cfa8;box-shadow:0 3px 10px #1b50240a}
+ .calendar-event:hover{box-shadow:0 2px 7px #1b502418}
+ summary:hover{color:#276b36}
+ .menu-toggle:hover{box-shadow:0 2px 7px #1b502414}
+}
+@media(prefers-reduced-motion:reduce){
+ .button,.features>article,.stat,.app-sidebar nav a,.text-link,.balance-summary>div,.data-table tbody tr,.calendar-event,summary,.menu-toggle{transition:none!important;transform:none!important}
+}

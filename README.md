@@ -166,3 +166,6 @@ Only Admin A can delete employee or other administrator accounts from **Employee
 ## Changing an employee username
 
 Employees can open Account Settings > Change Username, enter a new unique username and their current password, then select Update Username. Use 3–30 letters, numbers, dots, hyphens, or underscores. Usernames are case-insensitive when signing in and checking uniqueness. Only the signed-in employee’s own username can be changed; administrators do not have this option. Leave records, balances, profile, and account access stay attached to the same account ID. The employee stays signed in and uses the new username on future sign-ins. An account with a temporary password must change that password first.
+
+## Readability and interactions
+The interface uses larger body text, navigation, table text, and helper notes through assets/css/readability.css. The landing sample adapts to smaller screens instead of shrinking its text. Wide tables scroll within their own panels. Hover feedback is restrained, keyboard focus stays visible, and reduced-motion preferences disable movement.

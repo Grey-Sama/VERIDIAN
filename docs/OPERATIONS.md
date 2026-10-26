@@ -107,3 +107,6 @@ PHP syntax checks, 52 role/action combinations, weekday planner and password pol
 
 ## Employee username changes
 Employees may update their own username in Account Settings after confirming their current password. The central username action permits employees only and uses the authenticated account ID, ignoring supplied user IDs and roles. Validation follows the existing 3–30 character username policy and the database case-insensitive unique constraint. Account IDs and related records remain unchanged. Current sessions and Remember Me stay valid. Temporary-password restrictions apply. No database migration is needed for this feature.
+
+## Readability update 27 October 2026
+Shared readability overrides load last on the landing and application pages. Main body copy is 16px; navigation and buttons are 15px, with table and helper text generally 14px. Small category labels are 12px. Landing preview text is enlarged with responsive two-column cards. Desktop sidebars can scroll vertically on short screens. Quiet hover feedback respects reduced motion. No database migration is required.

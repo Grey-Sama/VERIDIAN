@@ -1,0 +1,56 @@
+/* Readable type across public pages and the employee portal. */
+body{font-size:16px;line-height:1.65}
+body .button,body .text-link,body .cancel,body .signout,body .filter-links a,body .menu-toggle{font-size:15px;line-height:1.5;min-height:44px}
+body .eyebrow,body .hero .eyebrow{font-size:12px;letter-spacing:1.2px;line-height:1.6}
+body .auth-form label,body .app-main label{font-size:15px;line-height:1.5}
+body .field-hint,body .auth-form .field-hint,body .app-main .field-hint,body .session-help,body .remember-option small,body .footnote,body .auth-form .signup-link{font-size:14px;line-height:1.6;color:#52634d}
+body .auth-form .muted,body .info,body .auth-form .info{font-size:16px;line-height:1.65}
+body .auth-story p:not(.eyebrow){font-size:16px;line-height:1.7}
+body .auth-story>small{font-size:14px;line-height:1.6}
+body .app-sidebar nav a{font-size:15px;line-height:1.5;padding:12px;white-space:normal}
+body .portal-identity,body .app-sidebar .nav-label{font-size:12px;letter-spacing:1px;line-height:1.5}
+body .app-sidebar .user-card b{font-size:15px}body .app-sidebar .user-card small{font-size:14px}
+body .app-top{font-size:14px;line-height:1.6}
+body .welcome p:not(.eyebrow),body .app-main .page-heading>p:last-child,body .panel .muted,body .form-panel .muted,body .profile-settings-top p,body .gentle-banner p{font-size:16px;line-height:1.65}
+body .stat>span{font-size:14px;line-height:1.5}body .stat strong{font-size:36px}
+body .data-table{font-size:14px;line-height:1.6}body .data-table caption,body .data-table small,body .data-table .directory-person b,body .data-table .badge{font-size:14px}
+body .data-table td,body .data-table th{padding:15px;line-height:1.6}
+body .data-table .reason,body .review-form label,body .request-card .reason{font-size:16px}
+body .balance-summary span,body .balance-summary small,body .calendar-day time,body .calendar-event,body .calendar-event b,body .calendar-event span,body .calendar-agenda small,body .ongoing-list small{font-size:14px;line-height:1.55}
+body .balance-summary>div{padding:18px 12px}
+body .profile-panel input[type=file],body .password-reset-dialog small,body .temporary-password-label,body .reset-password-help{font-size:14px;line-height:1.6}
+body .app-footer{font-size:13px;line-height:1.6;color:#52634d}
+/* Public content uses full-size text; the sample is no longer a tiny screenshot. */
+body .hero header nav,body footer nav{font-size:15px}
+body .intro>p:not(.eyebrow),body .section .copy,body .steps p,body .features article>p,body .faq details p,body .closing p{font-size:16px;line-height:1.75}
+body .intro>small,body .trust small,body .trust p,body .copyright,body footer p,body .faq summary{font-size:14px;line-height:1.7}
+body .hero .intro>small{color:#bad5c1}
+body .scene{height:auto;padding:16px 0 0;max-width:1100px}
+body .scene .float{display:none}
+body .scene .dashboard{width:100%;min-height:0}
+body .dashboard .sidebar{width:180px;font-size:13px;padding:20px 12px}
+body .dashboard .sidebar>div{color:#dfeddf;line-height:1.6}
+body .dashboard .sidebar .active{color:#194e2b}
+body .dashboard .workspace{padding:20px;overflow:visible}
+body .dashboard .topbar,body .dashboard .dash-heading small,body .dashboard .dash-heading p,body .dashboard .request,body .dashboard .stats article>span,body .dashboard .stats strong small,body .dashboard table,body .dashboard .badge,body .dashboard .demo,body .dashboard .requests .row>span{font-size:13px;line-height:1.55}
+body .dashboard .topbar,body .dashboard .dash-heading small,body .dashboard .dash-heading p,body .dashboard .stats article>span,body .dashboard .stats strong small,body .dashboard .demo{color:#52684d}
+body .dashboard .dash-heading{flex-wrap:wrap}body .dashboard .dash-heading h3{font-size:20px;max-width:none}
+body .dashboard .stats article{padding:14px 10px}body .dashboard .stats article>span{min-height:40px}body .dashboard .stats strong{font-size:28px}
+body .dashboard .row h4{font-size:16px}body .dashboard th{color:#52684d}
+body .art{height:auto;min-height:230px}body .art .row,body .art p,body .art label,body .art small,body .art .badge,body .art>div,body .months,body .preview-balances span,body .preview-policy,body .approval-art small{font-size:14px;line-height:1.6}
+body .preview-balances{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:1050px){body .app-sidebar{width:220px}body .balance-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){body .app-sidebar{width:100%}body .app-sidebar nav a{min-height:46px}body .app-top{font-size:13px}body .app-main .panel-heading{flex-wrap:wrap}body .app-main .panel-heading .text-link{max-width:none;text-align:left}body .dashboard .sidebar{display:none}body .dashboard .workspace{padding:14px}body .dashboard .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}body .dashboard .dash-heading p{max-width:none}body .dashboard .stats article>span{min-height:0}body .hero{padding-left:16px;padding-right:16px}body .hero header{padding:12px;flex-wrap:wrap}body .hero header .button{font-size:14px}body .hero .intro>p:not(.eyebrow){font-size:16px}body .section{padding-left:20px;padding-right:20px}body .profile-settings-top{flex-wrap:wrap}}
+@media(max-width:480px){body .balance-summary{grid-template-columns:1fr}body .button{white-space:normal}body .dashboard .topbar{flex-wrap:wrap;gap:8px}body .dashboard .requests{padding:10px}body .dashboard .row{flex-wrap:wrap;gap:8px}body .auth-panel{padding-left:18px;padding-right:18px}}
+body .section .eyebrow,body .closing .eyebrow{font-size:12px;line-height:1.6}
+body .section .note{font-size:14px;color:#52684d;line-height:1.6}
+body .hero .dashboard .requests .row h4{font-size:16px;line-height:1.5}
+body .approval-art h4,body .approval-art p,body .approval-art .dates b,body .approval-art .sticker{font-size:14px;line-height:1.6}
+body .approval-art .dates{gap:12px;flex-wrap:wrap}body .approval-art .dates b{white-space:normal}
+body .app-sidebar .portal-identity{font-size:12px;line-height:1.6}
+body .app-main .stat>span{font-size:14px;line-height:1.6}
+body .app-main .panel-heading .text-link{font-size:15px;line-height:1.5}
+body .app-sidebar{overflow-y:auto}
+@media(max-width:760px){body .app-sidebar{overflow:visible}}
+body .table-tools>.button{height:46px;min-height:46px;padding:8px 14px}
+body .app-sidebar.has-menu>.portal-identity{font-size:12px;line-height:1.6}

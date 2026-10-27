@@ -5,11 +5,25 @@ function access_primary(array $user,int $primary): bool {
 }
 function access_action(array $user,int $primary,string $action): bool {
  if(!in_array($user['role'],['employee','admin'],true))return false;
- return match($action){
-  'administrator','reset_password','delete_account'=>access_primary($user,$primary),
-  'employee','employment_type','review'=>$user['role']==='admin',
-  'request','cancel','username'=>$user['role']==='employee',
-  'work_details','password','profile_picture','remove_picture'=>true,
-  default=>false,
- };
+ switch($action){
+  case 'administrator':
+  case 'reset_password':
+  case 'delete_account':
+   return access_primary($user,$primary);
+  case 'employee':
+  case 'employment_type':
+  case 'review':
+   return $user['role']==='admin';
+  case 'request':
+  case 'cancel':
+  case 'username':
+   return $user['role']==='employee';
+  case 'work_details':
+  case 'password':
+  case 'profile_picture':
+  case 'remove_picture':
+   return true;
+  default:
+   return false;
+ }
 }

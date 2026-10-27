@@ -177,3 +177,15 @@ Run database/migrate-employment.sql once on an existing installation before depl
 Numeric overrides in the legacy leave_allowances table are retained for historical reference but no longer used in balance calculations. No leave requests or account records are removed by this migration. The internal leave_category_history table preserves past category assignments for years containing requests. Review this chosen policy before using it for actual employment benefits.
 
 The landing hero has a subtle cursor-following green glow on mouse devices. It fades on pointer exit and is disabled on touch/coarse-pointer devices and when reduced motion is requested.
+
+Password fields include a Show/Hide eye button. Passwords start hidden. AdminA can change employee categories from Leave Balances using Current Employment Category and Save Category; employees cannot change their own category. Existing leave usage is retained.
+
+
+Administrators use the Leave Balances employee table to search or sort available credits. Select an employee to open their balance popup and save an employment category. Close with × or Escape. Credits continue to follow the category policy; employees only see their own balances.
+
+New employee and administrator accounts use the same gender-neutral default profile icon. Account owners can upload a picture in Account Settings or restore the neutral icon. Existing uploaded pictures are preserved.
+
+## User documentation
+
+- [Employee and administrator Word guide](docs/Veridian%20Employee%20and%20Administrator%20User%20Guide.docx) covers the landing page, features, permissions, leave policy, and operating instructions.
+- [Short video narration script](docs/VIDEO-GUIDE.md) covers employee and administrator walkthroughs.
